@@ -17,21 +17,21 @@ config ={
 def capture_and_save_image():
     cap = cv2.VideoCapture(0)
     if not cap.isOpened():
-        print("Không thể mở webcam.")
+        print("Not webcam.")
         return
 
     current_hour = time.localtime().tm_hour
     while current_hour >= 0 and current_hour <= 1:
-        ret, frame = cap.read()
-        if not ret:
-            print("Không thể chụp ảnh.")
+        _, frame = cap.read()
+        cv2.imshow("video", frame)
+        if cv2.waitKey(1) == ord('q'):
             break
 
         timestamp = time.strftime("%Y%m%d_%H%M%S")
         file_name = f"image_{timestamp}.jpg"
         save_path = "C:\\Users\\Khang Nguyen\\Desktop\\" + file_name
         cv2.imwrite(save_path, frame)
-        print(f"Đã chụp và lưu ảnh {file_name}")
+        print(f"{file_name}")
 
         time.sleep(10)
 
@@ -44,5 +44,5 @@ def capture_and_save_image():
     cap.release()
     cv2.destroyAllWindows()
 
-# Gọi hàm để bắt đầu chụp ảnh
+
 capture_and_save_image()
